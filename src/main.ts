@@ -236,7 +236,7 @@ class Coder1 {
 		protected language: string = 'JavaScript', // - this makes this property optional and not required when creating a new instance of the class
 	) {
 
-		// this.name = name // - notice how you are assigning the parameter to the property. Without this, you get an error. Try commenting in
+		// this.name = name // - Try commenting in
 
 	}
 
@@ -251,6 +251,9 @@ console.log(Dave.getAge())
 // console.log(Dave.age)
 
 class WebDev extends Coder1 {
+
+	passion!: string
+
 	constructor(
 		public computer: string,
 		name: string,
@@ -352,3 +355,86 @@ class Band{
 const band = new Band()
 band.data = ['a', 'b', 'c'] // - this is calling the setter
 console.log(band.data) // - this is calling the getter
+
+
+
+// Index Signture
+
+interface TransactionOjb {
+	[key: string]: number
+	Pizza: number,
+	Books: number,
+	Jobs: number,
+	// [index: string]: number
+}
+
+const todaysTransactions: TransactionOjb = {
+	Pizza: -10,
+	Books: -20,
+	Jobs: 30,
+}
+
+console.log(todaysTransactions.Pizza)
+console.log(todaysTransactions['Pizza'])
+
+let prop: string = 'Pizza'
+console.log(todaysTransactions[prop])
+
+const todaysNet = (transactions: TransactionOjb): number => {
+	let net = 0
+	for (const t in transactions) {
+		net += transactions[t]
+	}
+	return net
+}
+
+console.log(todaysNet(todaysTransactions))
+
+///
+interface Student {
+	// [key: string]: string | number | number[] | undefined
+	name: string,
+	GPA: number,
+	classes?: number[]
+}
+
+const student: Student = {
+	name: 'Cisco',
+	GPA: 3.5,
+	classes: [101, 201, 302]
+}
+
+for (const key in student) {
+console.log(`${key}: ${student[key as keyof Student]}`)
+// console.log(`${key}: ${student[key]}`)
+}
+//////////
+Object.keys(student).forEach(key => {
+	console.log(`${key}: ${student[key as keyof typeof student]}`)
+})
+/////////////
+const logStudentKey = (student: Student, key: keyof Student): void => {
+	console.log(`Student ${key}: ${student[key]}`)
+}
+
+logStudentKey(student, 'GPA')
+
+//////////////////////////
+
+// interface Incomes {
+// 	[key: string]: number // - this is more specific
+// }
+
+type Streams = 'salary' | 'bonus' | 'sideHustle'
+
+type Incomes = Record<Streams, number>
+
+const monthlyIncomes: Incomes = {
+	salary: 1000,
+	bonus: 200,
+	sideHustle: 300
+}
+
+for (const revenue in monthlyIncomes) {
+	console.log(revenue, ': ', monthlyIncomes[revenue as keyof Incomes])
+}

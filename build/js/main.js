@@ -18,7 +18,7 @@ let isActive;
 let re = /\w+/g;
 let stringArray = ['a', 'b', 'c'];
 let numberArray = [1, 2, '3'];
-let mixedData = [4, 2, '3'];
+let mixedData = [4, 2, '3', { age: 12 }];
 // stringArray[0] = 2;
 let object = { 3: 'a', 4: 'b' };
 stringArray[1] = object[3];
@@ -28,7 +28,7 @@ notTuple = [1, 'a'];
 // Tuple
 let myTuple;
 myTuple = ['a', 1];
-// myTuple = [1, 'a']
+// myTuple = [1, 'a'] // - this will throw an error because order matters in tuples
 // myTuple = notTuple
 let myObj;
 // myObj = { name: 'max' }
@@ -155,7 +155,7 @@ class Coder1 {
     constructor(
     // - Visibility modifiers - protected, public, or private and readonly - : by default, all are public
     name, music, age, language = 'JavaScript') {
-        // this.name = name // - notice how you are assigning the parameter to the property. Without this, you get an error. Try commenting in
+        // this.name = name // - Try commenting in
         this.name = name;
         this.music = music;
         this.age = age;
@@ -222,4 +222,59 @@ class Band {
     get data() {
         return this.dataSate;
     }
+    set data(value) {
+        if (Array.isArray(value) && value.every(el => typeof el === 'string')) {
+            this.dataSate = value;
+            return;
+        }
+        else {
+            throw new Error('Not an array of strings');
+        }
+    }
+}
+const band = new Band();
+band.data = ['a', 'b', 'c']; // - this is calling the setter
+console.log(band.data); // - this is calling the getter
+const todaysTransactions = {
+    Pizza: -10,
+    Books: -20,
+    Jobs: 30,
+};
+console.log(todaysTransactions.Pizza);
+console.log(todaysTransactions['Pizza']);
+let prop = 'Pizza';
+console.log(todaysTransactions[prop]);
+const todaysNet = (transactions) => {
+    let net = 0;
+    for (const t in transactions) {
+        net += transactions[t];
+    }
+    return net;
+};
+console.log(todaysNet(todaysTransactions));
+const student = {
+    name: 'Cisco',
+    GPA: 3.5,
+    classes: [101, 201, 302]
+};
+for (const key in student) {
+    console.log(`${key}: ${student[key]}`);
+    // console.log(`${key}: ${student[key]}`)
+}
+//////////
+Object.keys(student).forEach(key => {
+    console.log(`${key}: ${student[key]}`);
+});
+/////////////
+const logStudentKey = (student, key) => {
+    console.log(`Student ${key}: ${student[key]}`);
+};
+logStudentKey(student, 'GPA');
+const monthlyIncomes = {
+    salary: 1000,
+    bonus: 200,
+    sideHustle: 300
+};
+for (const revenue in monthlyIncomes) {
+    console.log(revenue, ': ', monthlyIncomes[revenue]);
 }
