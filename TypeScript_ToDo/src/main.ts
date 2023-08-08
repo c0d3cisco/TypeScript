@@ -10,9 +10,16 @@ const initApp = (): void => {
 	const itemEntryForm = document.getElementById('itemEntryForm') as HTMLFormElement
 	itemEntryForm.addEventListener('submit', (event: SubmitEvent): void => {
 		event.preventDefault()
+
 		const input = document.getElementById('newItem') as HTMLInputElement
+	
+		//TODO - try to tap into all of the input keys
+
 		const newEntryText: string = input.value.trim()
-		// if(!newEntryText) return
+		
+		input.value = ''
+
+
 
 		const itemId: number = fullList.list.length 
 		? parseInt(fullList.list[fullList.list.length -1].id + 1)

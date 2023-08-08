@@ -54,4 +54,6 @@ export default class FullList implements List {
 		this.save()
 	}
 
+	//TODO: set up method to handle re-order. perhaps in the ListTemplate since this is deals with DOM el and events
+
 }
