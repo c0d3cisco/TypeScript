@@ -6,12 +6,12 @@ interface List {
 	save(): void,
 	clearList(): void,
 	addItem(itemObj: ListItem): void,
-	remoteItem(id: string): void,
+	removeItem(id: string): void,
 }
 
 export default class FullList implements List {
 
-	static instance: FullList = new FullList() //- static since we need to make this a SINGLETON
+	static instance: FullList = new FullList() //- static since we need to make this a SINGLETON. I think it means this is easy to over ride pre existing info
 
 	private constructor( //- this private is required for the static
 		private _list: ListItem[] = []
@@ -40,12 +40,16 @@ export default class FullList implements List {
 		localStorage.setItem('myList', JSON.stringify([]))
 	}
 
+	doNothing(): string { //- can always add methods, but you must at least include those made in the interface
+		return 'except return a string'
+	}
+
 	addItem(itemObj: ListItem): void {
 		this._list.push(itemObj)
 		this.save()
 	}
 
-	remoteItem(id: string): void {
+	removeItem(id: string): void {
 		this._list = this._list.filter(item => item.id !== id)
 		this.save()
 	}
